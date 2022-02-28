@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment2"
-    android:background="@color/black">
+    android:background="@color/black"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".Fragment2">
 
     <TextView
-        android:id="@+id/tvFrag2"
-        android:gravity="center"
+        android:id="@+id/tvAddFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Fragment2"
-        android:textColor="@color/white"
-        />
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="Add Fragment"
+        android:textColor="@color/white" />
 
-</FrameLayout>
+
+    <TextView
+        android:id="@+id/tvReplaceFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="Replace Fragment"
+        android:textColor="@color/white" />
+
+</LinearLayout>

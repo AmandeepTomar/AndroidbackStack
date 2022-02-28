@@ -1,19 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment4"
-    android:background="@color/purple_200">
+    tools:context="fragments.Fragment4"
+    android:background="@color/purple_200"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:gravity="center"
         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="Fragment4"
         android:textColor="@color/black"
         />
+    <TextView
+        android:id="@+id/tvAddFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="Add Fragment"
+        android:textColor="@color/white" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tvReplaceFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="Replace Fragment"
+        android:textColor="@color/white" />
+
+
+</LinearLayout>

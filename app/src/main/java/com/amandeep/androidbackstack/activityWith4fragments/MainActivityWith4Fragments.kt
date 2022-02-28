@@ -1,27 +1,40 @@
-package com.amandeep.androidbackstack
+package com.amandeep.androidbackstack.activityWith4fragments
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.amandeep.androidbackstack.databinding.ActivityMain2Binding
+import com.amandeep.androidbackstack.R
+import com.amandeep.androidbackstack.databinding.ActivityMainBinding
 import com.amandeep.androidbackstack.fragments.Fragment1
+import com.amandeep.androidbackstack.fragments.Fragment2
+import com.amandeep.androidbackstack.fragments.Fragment3
+import com.amandeep.androidbackstack.fragments.Fragment4
 
-class MainActivity2 : AppCompatActivity() {
-    private val TAG="MainActivity2"
-    private lateinit var binding:ActivityMain2Binding
+class MainActivityWith4Fragments : AppCompatActivity() {
+    private val TAG = "MainActivity"
+    private lateinit var binding:ActivityMainBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e(TAG, "onCreate: ", )
-        binding= ActivityMain2Binding.inflate(layoutInflater)
+        Log.e(TAG, "onCreate: ")
+        binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frame1, Fragment1.newInstance("", "")).addToBackStack("One").commit()
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container2Activity, Fragment1.newInstance("", "")).addToBackStack("newOne").commit()
+            .replace(R.id.frame2, Fragment2.newInstance("", "")).addToBackStack("Two").commit()
+
+        supportFragmentManager.beginTransaction()
+            .add(R.id.frame3, Fragment3.newInstance("", "")).commit()
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frame4, Fragment4.newInstance("", "")).addToBackStack("Four").commit()
+
 
     }
-
 
     override fun onStart() {
         super.onStart()
@@ -67,4 +80,10 @@ class MainActivity2 : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
     }
+
+    override fun onBackPressed() {
+        Log.e(TAG, "onBackPressed: ", )
+        super.onBackPressed()
+    }
+
 }

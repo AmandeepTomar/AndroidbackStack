@@ -1,4 +1,4 @@
-package com.amandeep.androidbackstack
+package com.amandeep.androidbackstack.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -7,9 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
-import com.amandeep.androidbackstack.databinding.Fragment2Binding
-import kotlin.math.log
+import com.amandeep.androidbackstack.R
+import com.amandeep.androidbackstack.databinding.Fragment3Binding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,15 +17,15 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Fragment2.newInstance] factory method to
+ * Use the [Fragment3.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Fragment2 : Fragment() {
+class Fragment3 : Fragment() {
+    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var binding: Fragment2Binding
-    
-    private val TAG="Fragment2";
+    private val TAG="Fragment3";
+    private lateinit var bindng:Fragment3Binding
 
 //    private val callback= object : OnBackPressedCallback(true) {
 //        override fun handleOnBackPressed() {
@@ -39,6 +38,7 @@ class Fragment2 : Fragment() {
         super.onAttach(context)
         Log.e(TAG, "onAttach: ", )
 //        requireActivity().onBackPressedDispatcher.addCallback(callback)
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,24 +56,39 @@ class Fragment2 : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         Log.e(TAG, "onCreateView: ", )
-        binding= Fragment2Binding.inflate(inflater,container,false)
-        return binding.root
+        bindng=Fragment3Binding.inflate(inflater,container,false)
+        return bindng.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.e(TAG, "onViewCreated: ", )
+
+        bindng.tvAddFragment.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction().apply {
+                add(R.id.activity3Container,Fragment4.newInstance("","")).addToBackStack("AddFrag3").commit()
+            }
+        }
+
+        bindng.tvReplaceFragment.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction().apply {
+                replace(R.id.activity3Container,Fragment1.newInstance("","")).addToBackStack("AddFrag3").commit()
+            }
+        }
+
+
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        Log.e(TAG, "onViewStateRestored: ", )
     }
 
 
     override fun onStart() {
         super.onStart()
         Log.e(TAG, "onStart: ", )
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        Log.e(TAG, "onViewStateRestored: ", )
     }
 
 
@@ -92,7 +107,6 @@ class Fragment2 : Fragment() {
         Log.e(TAG, "onStop: ", )
     }
 
-    // prior API 28 it is calling before onStop()
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         Log.e(TAG, "onSaveInstanceState: ", )
@@ -112,7 +126,7 @@ class Fragment2 : Fragment() {
         super.onDetach()
         Log.e(TAG, "onDetach: ", )
     }
-    
+
 
     companion object {
         /**
@@ -121,12 +135,12 @@ class Fragment2 : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Fragment2.
+         * @return A new instance of fragment Fragment3.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Fragment2().apply {
+            Fragment3().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

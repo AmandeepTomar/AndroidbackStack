@@ -1,4 +1,4 @@
-package com.amandeep.androidbackstack
+package com.amandeep.androidbackstack.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import com.amandeep.androidbackstack.R
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -65,6 +66,11 @@ class Fragment4 : Fragment() {
         Log.e(TAG, "onViewCreated: ", )
     }
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        Log.e(TAG, "onViewStateRestored: ", )
+    }
+
 
     override fun onStart() {
         super.onStart()
@@ -85,6 +91,11 @@ class Fragment4 : Fragment() {
     override fun onStop() {
         super.onStop()
         Log.e(TAG, "onStop: ", )
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.e(TAG, "onSaveInstanceState: ", )
     }
 
     override fun onDestroyView() {

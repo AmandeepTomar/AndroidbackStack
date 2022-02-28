@@ -10,16 +10,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidbackStack">
         <activity
-            android:name=".MainActivity2"
+            android:name=".singleActivityFragments.MainActivity3"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activitylifecycle.ActivityB"
+            android:exported="false" />
+        <activity
+            android:name=".activitylifecycle.ActivityA"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".activityWith4fragments.MainActivityWith4Fragments"
+            android:exported="true">
         </activity>
     </application>
 

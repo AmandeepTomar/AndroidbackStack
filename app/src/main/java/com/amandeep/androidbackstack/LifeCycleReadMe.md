@@ -103,6 +103,119 @@ Activity onStart()
 
 ```
 
-## UseCase of Activity has a fragment and launch Another activity with Fragment together.
+### UseCase Activity3 has many fragments with add and replace methods. 
+- `add()` it just add the fragment on top of another fragment
+- `replace()` it first replace all the fragment then add new fragment. 
+#### Scenario one Launch Activity With Fragment 
+```kotlin
+Activity3   onCreate()
+                    Fragment2   onAttach()
+                                onCreate()
+                                onCreateView()
+                                onViewCreated()
+                                onViewStateRestored()
+                                onStart()
+            onStart()
+            onResume()
+                    Fragment2   onResume()
+//  Fragment2 using replace , now we add fragment3 using add 
+ // No Method of Fragment2 Will call 
+                    Fragment3   onAttatch()
+                                onCreate()
+                                onCreateView()
+                                onViewCreated()
+                                onViewStaterestored()
+                                onStart()
+                                onResume()
+// Now Hit Back Button then all method of Fragment3 Will call 
+// no method of Fragment2 will call.
+                    Fragment3   onPause()
+                                onStop()
+                                onSavedInstance()
+                                onDestroyView()
+                                onDestroy()
+                                onDetach()
+//  Fragment2 using replace , now we add fragment4 using replace 
+//  Fragment2 lifeCycle method called noe Fragment2 is in OnResume() STATE.
+                    Fragment2   onPause()
+                                onStop()
+                    Fragment4   onAttatch()
+                                onCreate()
+                                onCreateView()
+                                onViewCreated()
+                                onViewSavedrestored()
+                                onStart()
+                                
+                    Fragment2   onDestroyView()
+                    Fragment4   onResume()
+// Now Hit Back Button (Both Fragment using replace())
+                    Fragment4   onPause()
+                                onStop()
+                    Fragment2   onCreateView()
+                                onViewCreated()
+                                onViewStateRestored()
+                                onStart()
+                    Fragment4   onDestroyView()
+                                onDestroy()
+                                onDetach()
+                    Fragment2   onResume()
+
+```
+
+## Note 
+- When we call `replace()` it will first replace all the fragments that are added and then added new fragment
+    - for example we have add a 
+      fragment using replace f1 ,
+      then add f2 using f1 then replace 
+        Now `replace()` will remove f1 and f2 and add f3.
+      on backpress of f3 now both f1 and f2 will call onCreateView to on Resume.
+      
+
+## UseCase of Activity1 has a fragment1 and launch Another Activity2 with Fragment2 together.
+- Sequences of the lifecycle events callbacks will be
+```kotlin
+Activity1   onCreate()
+        Fragment1   onAttach()
+                    onCreate()
+                    onCreateView()
+                    onViewCreated()
+                    onViewStateRestore()
+                    onStart()
+Activity1   onStart()
+            onResume()
+        Fragment1   onResume()
+// Here we click on Button , for Activity2
+                    onPause()
+Activity1   onPause()
+Activity2   onCreate()
+        Fargement2  onAttach()
+                    onCreate()
+                    onCreateView()
+                    onViewCreated()
+                    onViewStateRestore()
+                    onStart()
+Activity2   onStart()
+            onResume()
+        Fragment2   onResume()
+        Fragment1   onStop()
+                   
+Activity1   onStop()
+        Fragment1   onSavedInstanceState()
+// Bow click on System back button This part is Important.
+        Fragment2   onPause()
+Activity2   onPause()
+            onRestart()
+        Fragment1   onStart()
+Activity1   onStart()
+            onResume()
+        Fargment1   onResume()
+        Fragment2   onStop()
+Activity2   onStop()
+        Fargment2   onDestroyView()
+                    onDestroy()
+                    onDetach()
+Activity2   onDestroy()
+
+```
 
 

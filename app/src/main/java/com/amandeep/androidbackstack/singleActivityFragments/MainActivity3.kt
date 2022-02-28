@@ -1,27 +1,31 @@
-package com.amandeep.androidbackstack
+package com.amandeep.androidbackstack.singleActivityFragments
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.amandeep.androidbackstack.databinding.ActivityMain2Binding
-import com.amandeep.androidbackstack.fragments.Fragment1
+import com.amandeep.androidbackstack.R
+import com.amandeep.androidbackstack.databinding.ActivityMain3Binding
+import com.amandeep.androidbackstack.fragments.Fragment2
 
-class MainActivity2 : AppCompatActivity() {
-    private val TAG="MainActivity2"
-    private lateinit var binding:ActivityMain2Binding
-
+class MainActivity3 : AppCompatActivity() {
+    private val TAG = "MainActivity3"
+    private lateinit var binding: ActivityMain3Binding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e(TAG, "onCreate: ", )
-        binding= ActivityMain2Binding.inflate(layoutInflater)
+        binding = ActivityMain3Binding.inflate(layoutInflater)
         setContentView(binding.root)
+        Log.e(TAG, "onCreate: ", )
 
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container2Activity, Fragment1.newInstance("", "")).addToBackStack("newOne").commit()
-
+        supportFragmentManager.beginTransaction().apply {
+            replace(
+                R.id.activity3Container,
+                Fragment2.newInstance("", ""),
+                ""
+            )
+            addToBackStack("MA3F2")
+            commit()
+        }
     }
-
 
     override fun onStart() {
         super.onStart()

@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment1"
+    tools:context="fragments.Fragment1"
     android:orientation="vertical"
     android:gravity="center"
     android:background="@color/white">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:layout_margin="30dp"
         android:padding="15dp"
         android:id="@+id/tvFrag1"
         android:gravity="center"
@@ -20,14 +20,16 @@
         android:textColor="@color/black"
         />
     <TextView
+
+        android:gravity="center"
         android:background="@color/black"
-        android:layout_margin="15dp"
+        android:layout_margin="20dp"
         android:padding="10dp"
         android:id="@+id/tvFrag12"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Fragment12"
+        android:text="Start Activity 3"
         android:textColor="@color/white"
         />
 
