@@ -22,7 +22,6 @@ class MainActivity3 : AppCompatActivity() {
                 Fragment2.newInstance("", ""),
                 ""
             )
-            addToBackStack("MA3F2")
             commit()
         }
     }

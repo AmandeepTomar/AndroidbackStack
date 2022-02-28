@@ -106,6 +106,91 @@ Activity onStart()
 ### UseCase Activity3 has many fragments with add and replace methods. 
 - `add()` it just add the fragment on top of another fragment
 - `replace()` it first replace all the fragment then add new fragment. 
+#### its like we have an activity that has four fragment.
+- first add with `replace()` and addedToBackStack()
+- Second add with `replace()` and addedToBackStack()
+- third add with `add()` no backstack
+- fourth add with `replace()` and addedToBackStack()
+
+```kotlin
+    // As we launch the activity all fragment need to be added 
+    // so its look like 
+    Activity    onCreate()
+                        Fragment1   onAttach()
+                                    onCreate()
+                                    onCraeteView()
+                                    onViewCreated()
+                                    onViewStateRestored()
+                        Fragment2   onAttach()
+                                    onCreate()
+                                    onCraeteView()
+                                    onViewCreated()
+                                    onViewStateRestored()
+                        Fragment3   onAttach()
+                                    onCreate()
+                                    onCraeteView()
+                                    onViewCreated()
+                                    onViewStateRestored()
+                        Fragment4   onAttach()
+                                    onCreate()
+                                    onCraeteView()
+                                    onViewCreated()
+                                    onViewStateRestored()
+                        Fragment1   onStart()
+                        Fragment2   onStart()
+                        Fragment3   onStart()
+                        Fragment4   onStart()
+    Activity    onStart()
+                onResume()
+                        Fragment1   onResume()
+                        Fragment2   onResume()
+                        Fragment3   onResume()
+                        Fragment4   onResume()
+
+// Now press the system back button.
+                        Fragment4   onPause()
+                                    onStop() 
+                                    onDestroyView()
+                                    onDestroy()
+                                    onDetach()
+// same for Fragment 2 and 1 , 3 have not added in backstack.
+// so fragment 3 is visible on screen after 3 back press.
+// Now As we hit the back Button 
+                        Fragment3   onPause()
+    Activity    onPause()
+                        Fragment3   onStop()
+    Activity    onStop()
+                        Fragment3   
+                                    onDestroyView()
+                                    onDestroy()
+                                    onDetach()
+    Activity    onDestroy
+
+// Now we hit the Home Button.
+                        Fragment1   onPause()
+                        Fragment2   onPause()
+                        Fragment3   onPause()
+                        Fragment4   onPause()
+    Activity    onPause()
+                        Fragment1   onStop()
+                        Fragment2   onStop()
+                        Fragment3   onStop()
+                        Fragment4   onStop()
+    Activity    onStop()
+                        Fragment1   onSaveInstanceState()
+                        Fragment2   onSaveInstanceState()
+                        Fragment3   onSaveInstanceState()
+                        Fragment4   onSaveInstanceState()
+
+// As launch again 
+    onRestart()
+    onStart() -> Fragments
+    onStart()
+    onResume()
+    onResume()--> Fragments
+
+
+```
 #### Scenario one Launch Activity With Fragment 
 ```kotlin
 Activity3   onCreate()
@@ -174,47 +259,47 @@ Activity3   onCreate()
 ## UseCase of Activity1 has a fragment1 and launch Another Activity2 with Fragment2 together.
 - Sequences of the lifecycle events callbacks will be
 ```kotlin
-Activity1   onCreate()
-        Fragment1   onAttach()
-                    onCreate()
-                    onCreateView()
-                    onViewCreated()
-                    onViewStateRestore()
-                    onStart()
-Activity1   onStart()
-            onResume()
-        Fragment1   onResume()
-// Here we click on Button , for Activity2
-                    onPause()
-Activity1   onPause()
-Activity2   onCreate()
-        Fargement2  onAttach()
-                    onCreate()
-                    onCreateView()
-                    onViewCreated()
-                    onViewStateRestore()
-                    onStart()
-Activity2   onStart()
-            onResume()
-        Fragment2   onResume()
-        Fragment1   onStop()
-                   
-Activity1   onStop()
-        Fragment1   onSavedInstanceState()
-// Bow click on System back button This part is Important.
-        Fragment2   onPause()
-Activity2   onPause()
-            onRestart()
-        Fragment1   onStart()
-Activity1   onStart()
-            onResume()
-        Fargment1   onResume()
-        Fragment2   onStop()
-Activity2   onStop()
-        Fargment2   onDestroyView()
-                    onDestroy()
-                    onDetach()
-Activity2   onDestroy()
+    Activity1   onCreate()
+            Fragment1   onAttach()
+                        onCreate()
+                        onCreateView()
+                        onViewCreated()
+                        onViewStateRestore()
+                        onStart()
+    Activity1   onStart()
+                onResume()
+            Fragment1   onResume()
+    // Here we click on Button , for Activity2
+                        onPause()
+    Activity1   onPause()
+    Activity2   onCreate()
+            Fargement2  onAttach()
+                        onCreate()
+                        onCreateView()
+                        onViewCreated()
+                        onViewStateRestore()
+                        onStart()
+    Activity2   onStart()
+                onResume()
+            Fragment2   onResume()
+            Fragment1   onStop()
+                       
+    Activity1   onStop()
+            Fragment1   onSavedInstanceState()
+    // Bow click on System back button This part is Important.
+            Fragment2   onPause()
+    Activity2   onPause()
+                onRestart()
+            Fragment1   onStart()
+    Activity1   onStart()
+                onResume()
+            Fargment1   onResume()
+            Fragment2   onStop()
+    Activity2   onStop()
+            Fargment2   onDestroyView()
+                        onDestroy()
+                        onDetach()
+    Activity2   onDestroy()
 
 ```
 
