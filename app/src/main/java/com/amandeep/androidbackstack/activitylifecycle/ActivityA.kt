@@ -18,9 +18,18 @@ class ActivityA : AppCompatActivity() {
         setContentView(binding.root)
         Log.e(TAG, "onCreate: ", )
 
+
+
         binding.btnActivityLifeCycle.setOnClickListener {
             // in this we check lifeCycle Activity for ActivityA and ActivityB
-            startActivity(Intent(this,ActivityB::class.java))
+            val data=ShareDataClassWithParcelable("Yes We get this",true,true)
+            val data1=ShareNormalClass("AndroidShareData",true)
+            val intent=Intent(this,ActivityB::class.java)
+            val bundle=Bundle()
+            bundle.putParcelable("Bundle",data1)
+
+            intent.putExtra("Data",bundle);
+            startActivity(intent)
         }
 
         binding.btnSingleActivityWith4Frag.setOnClickListener {

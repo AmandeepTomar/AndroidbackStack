@@ -14,6 +14,15 @@ class ActivityB : AppCompatActivity() {
         binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Log.e(TAG, "onCreate: ", )
+
+        intent?.let {
+            val bundle = it.extras
+            val data= bundle?.get("Data") as Bundle
+            Log.e(TAG, "onCreate: Bundle data ${data}" )
+            data.getBundle("Bundle")
+
+            Log.e(TAG, "onCreate: Bundle data ${data["Bundle"]}" )
+        }
     }
 
 

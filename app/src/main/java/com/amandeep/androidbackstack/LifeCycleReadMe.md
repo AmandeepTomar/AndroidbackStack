@@ -25,17 +25,17 @@
 - Activity1 `( onStop())`
 - Activity1 to Activity2
 ```kotlin
-Activity1
-    OnCreate()
-    onStart()
-    onResume()
-    onPause()
-Activity2
-    onCreate()
-    onStart()
-    onResume()
-Activity1
-    onStop()
+    Activity1
+        OnCreate()
+        onStart()
+        onResume()
+        onPause()
+    Activity2
+        onCreate()
+        onStart()
+        onResume()
+    Activity1
+        onStop()
 ```
     
 Sequence is like 
@@ -49,15 +49,15 @@ Sequence is like
     - `onStop(), onDestroy()` on Activity2.
   
 ```kotlin
-Activity2
-    onPause()
-Activity1
-    onRestart()
-    onStart()
-    onResume()
-Activity2
-    onStop()
-    onDestroy()
+    Activity2
+        onPause()
+    Activity1
+        onRestart()
+        onStart()
+        onResume()
+    Activity2
+        onStop()
+        onDestroy()
 ```
 
 ## Fragment LifeCycle
@@ -300,6 +300,69 @@ Activity3   onCreate()
                         onDestroy()
                         onDetach()
     Activity2   onDestroy()
+
+```
+
+
+## Shared data Between Two Activity 
+- ActivityA wants to shared data to ActivityB 
+- We use `Parcelable` interface to share the object between two activities. 
+- Benefit of using `Parcelable` interface is that we have complete control on which data need to sent or not.
+   -  Suppose we have an object that have three property
+        - String name , isPass : Boolean = false and isNot:Boolean=false
+        - in that case we just want to name should be parcelable so just name in `writeToParcel()` method and also in constructor we used name dor the read. only this value will be shared.
+        - <B>What will happen with isPass and isNot<B>
+            - Answer is name has the actual value and isPass and isNot will have default values.
+            - If we do not writeToParcel() the property that will not be shared , it will shared with Default value.
+    ```kotlin
+        data class ShareDataWithParcelable(val data: String?, val isData: Boolean =false, val isNotData:Boolean=false) : Parcelable {
+            constructor(parcel: Parcel) : this(
+                parcel.readString()
+        //       parcel.readBoolean(),
+        //        parcel.readBoolean()
+        
+            ) {
+            }
+        
+            override fun writeToParcel(parcel: Parcel, flags: Int) {
+                parcel.writeString(data)
+        //        parcel.writeBoolean(isData)
+        //        parcel.writeBoolean(isNotData)
+        }
+        
+            override fun describeContents(): Int {
+                return 0
+            }
+        
+            companion object CREATOR : Parcelable.Creator<ShareDataWithParcelable> {
+                override fun createFromParcel(parcel: Parcel): ShareDataWithParcelable {
+                    return ShareDataWithParcelable(parcel)
+                }
+        
+                override fun newArray(size: Int): Array<ShareDataWithParcelable?> {
+                    return arrayOfNulls(size)
+                }
+            }
+        }
+  
+  // Code in Activity A
+             val data=ShareDataWithParcelable("Yes We get this",true,true)
+            val intent=Intent(this,ActivityB::class.java)
+            val bundle=Bundle()
+            bundle.putParcelable("Bundle",data)
+            intent.putExtra("Data",bundle);
+            startActivity(intent)
+  // Code in ActivityB
+  
+            intent?.let {
+            val bundle = it.extras
+            val data= bundle?.get("Data") as Bundle
+            Log.e(TAG, "onCreate: Bundle data ${data}" ) // Bundle
+            Log.e(TAG, "onCreate: Bundle data ${data["Bundle"]}" ) // data
+        }
+        
+    output :  Bundle data Bundle[mParcelledData.dataSize=212]
+         Bundle data ShareDataWithParcelable(data=Yes We get this, isData=false, isNotData=false)
 
 ```
 
