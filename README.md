@@ -304,4 +304,45 @@ Activity3   onCreate()
 
 ```
 
+### Q:  What is happen when we use addToBackStack() with replace() and without addToBackStack() which life cycle method will be called.
+- UseCase Fragment1 added with`replace()` with `addToBackStack()` and Fragment2 with `replace()` and without `addToBackStack()` , Which life cycle of both fragment called.
+    
+```kotlin
+    Fragment1   onAttach()
+                onCreate()
+                onCreateView()
+                onViewCreated()
+                onViewStateRestored()
+                onStart()
+                onResume()
+    // click on replace button without addToBackStack
+    Fragment1   onPause()
+                onStop()
+    Fragment2   onAttach()
+                onCreate()
+                onCreateView()
+                onViewCreated()
+                onViewStateRestored()
+                onStart()
+    Fragment1   onDestroyView()
+    Fragment2   onResume()
+    // onBackPress 
+    Fragment1   onDestroy()
+                onDetach()
+    // And still fragment 2 is visible.
+```
+
+### Q: addToBackStack stores transaction.  
+- By calling addToBackStack(), the replace transaction is saved to the back stack so the user can reverse the transaction and bring back the previous fragment by pressing the Back button.
+
+If you add multiple changes to the transaction (such as another add() or remove()) and call addToBackStack(), then all changes applied before you call commit() are added to the back stack as a single transaction and the Back button will reverse them all together.
+
+The order in which you add changes to a FragmentTransaction doesn't matter, except:
+
+You must call commit() last. If you're adding multiple fragments to the same container, then the order in which you add them determines the order they appear in the view hierarchy.
+
+So you have to commit at the last.
+
+
+
 

@@ -73,7 +73,7 @@ class Fragment2 : Fragment() {
 
         binding.tvReplaceFragment.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction().apply {
-                replace(R.id.activity3Container,Fragment4.newInstance("","")).addToBackStack("AddFrag3").commit()
+                replace(R.id.activity3Container,Fragment4.newInstance("","")).commit()
             }
         }
     }
