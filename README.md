@@ -1,4 +1,8 @@
 ## Lifecycle of Activity and Fragment 
+- Lifecycle of Activity
+- Lifecycle of Fragments
+- Fragments backstack
+- Parcelable question
 
 ### This repo contains or usefull for.
 - Activity Lifecycle related questions
