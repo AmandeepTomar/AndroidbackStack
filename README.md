@@ -3,6 +3,7 @@
 - Lifecycle of Fragments
 - Fragments backstack
 - Parcelable question
+- Interface delegates exampole added in MainActivity
 
 ### This repo contains or usefull for.
 - Activity Lifecycle related questions
@@ -423,6 +424,56 @@ So you have to commit at the last.
     output :  Bundle data Bundle[mParcelledData.dataSize=212]
          Bundle data ShareDataWithParcelable(data=Yes We get this, isData=false, isNotData=false)
 
+    ```
+
+
+### Interface Delegates 
+- Interface delegate is a design pattern in kotlin that provide the composion over the abstraction. 
+- We can reduce the complexity of abstraction, example we have a baseclass that provide the logging for analytocs, or we have another base activity that having the funcationality of deeplink so we have two activity. to reduce the nested abstraction we can help the delegate.
+
+```kotlin
+
+class ActivityA : AppCompatActivity(),
+    LoggingState by LoggingStateImpl(),
+    Deeplink by DeeplinkImpl() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        registerLifeCycleOwner(this)
+        handleDeeplink(this, intent)
+    }
+    }
+
+interface LoggingState {
+    fun registerLifeCycleOwner(owner: LifecycleOwner)
+}
+
+class LoggingStateImpl : LoggingState, LifecycleEventObserver {
+    override fun registerLifeCycleOwner(owner: LifecycleOwner) {
+        owner.lifecycle.addObserver(this)
+    }
+
+    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+        when (event) {
+            Lifecycle.Event.ON_RESUME -> Log.e("TAG", "onStateChanged: onResumed Called")
+            Lifecycle.Event.ON_PAUSE -> Log.e("TAG", "onStateChanged: onPause Called")
+            else -> Unit
+        }
+    }
+
+}
+
+// Deligate for DeepLink
+
+interface Deeplink {
+    fun handleDeeplink(activityA: ComponentActivity, intent: Intent)
+}
+
+class DeeplinkImpl : Deeplink {
+    override fun handleDeeplink(activityA: ComponentActivity, intent: Intent) {
+        Log.e("TAG", "handleDeeplink: perfomr deeplink logic $activityA $intent")
+    }
+
+}
 ```
-
-
